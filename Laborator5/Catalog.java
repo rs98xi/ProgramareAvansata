@@ -3,22 +3,22 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Catalog implements java.io.Serializable{
-    List<Document> listOfDocuments;
+public class Catalog implements java.io.Serializable {
+    private List<Document> listOfDocuments;
 
 
-    public Catalog()
-    {
+    public Catalog() {
         this.listOfDocuments = new ArrayList<>();
     }
 
-    void AddDocument(Document doc)
-    {
+    void addDocument(Document doc) {
+        if (doc == null) {
+            return;
+        }
         listOfDocuments.add(doc);
     }
 
-    Document GetDocument(int index)
-    {
+    Document getDocument(int index) {
         return listOfDocuments.get(index);
     }
 }

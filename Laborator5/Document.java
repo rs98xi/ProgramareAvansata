@@ -1,15 +1,18 @@
 package com.company;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class Document implements java.io.Serializable{
-    String type;
-    Map<String, String>  map;
+public class Document implements java.io.Serializable {
+    private String type;
+    private Map<String, String> map;
 
     public Document(String nume, int ID, String type, String value) {
-        if(!type.equals("link") && !type.equals("path"))
+        if (!type.equals("link") && !type.equals("path")) {
             throw new IllegalArgumentException(
                     "Invalid argument");
+        }
+
 
         this.type = type;
 
@@ -23,13 +26,11 @@ public class Document implements java.io.Serializable{
         return type;
     }
 
-    void addTag(String key, String value)
-    {
+    void addTag(String key, String value) {
         map.put(key, value);
     }
 
-    String getTag(String key)
-    {
+    String getTag(String key) {
         return map.get(key);
     }
 

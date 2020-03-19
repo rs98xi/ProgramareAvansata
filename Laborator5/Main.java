@@ -6,15 +6,21 @@ public class Main {
 
         Catalog catalog = new Catalog();
 
-        Document fisier1 = new Document("fisier1", 1, "path", "C:\\Users\\simio\\Desktop\\fenrir.txt");
+        Document fisier1 = null;
+        Document fisier2 = null;
+        Document link1 = null;
+        try {
+            fisier1 = new Document("fisier1", 1, "path", "C:\\Users\\simio\\Desktop\\fenrir.txt");
 
-        Document fisier2 = new Document("fisier2", 2, "path", "C:\\Users\\simio\\Downloads\\engleza.pdf");
+            fisier2 = new Document("fisier2", 2, "path", "C:\\Users\\simio\\Downloads\\engleza.pdf");
 
-        Document link1 = new Document("link1", 3, "link", "https://www.google.com");
-
-        catalog.AddDocument(fisier1);
-        catalog.AddDocument(fisier2);
-        catalog.AddDocument(link1);
+            link1 = new Document("link1", 3, "link", "https://www.google.com");
+        } catch (IllegalArgumentException e) {
+            System.out.println(e);
+        }
+        catalog.addDocument(fisier1);
+        catalog.addDocument(fisier2);
+        catalog.addDocument(link1);
 
         CatalogHandler handler = new CatalogHandler(catalog);
         handler.open(2);
