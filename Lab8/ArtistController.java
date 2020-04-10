@@ -2,7 +2,7 @@ package com.company;
 
 import java.sql.ResultSet;
 
-public class ArtistController {
+public class ArtistController extends Controller{
 
     public void create(String name, String country) {
         Database db = Database.getInstance();

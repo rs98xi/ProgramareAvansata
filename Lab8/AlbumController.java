@@ -2,7 +2,7 @@ package com.company;
 
 import java.sql.*;
 
-public class AlbumController {
+public class AlbumController extends Controller{
 
     public void create(String name, int artistId, int releaseYear) {
         Database db = Database.getInstance();
