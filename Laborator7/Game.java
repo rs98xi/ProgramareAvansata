@@ -7,8 +7,7 @@ public class Game {
         new Thread(new GameDaemon(board, 500000)).start();
         new Thread(new SmartPlayer("Jucatorul 2", board)).start();
         new Thread(new SmartPlayer("Jucatorul 3", board)).start();
-        new Thread(new ManualPlayer("Jucatorul 4", board)).start();
-
+        new Thread(new SmartPlayer("Jucatorul 4", board)).start();
 
     }
 }
