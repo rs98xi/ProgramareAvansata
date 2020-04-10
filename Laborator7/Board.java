@@ -13,12 +13,15 @@ public class Board {
     private int pointsToWin;
     private int turn;
     private boolean timeOut;
+    private int winner;
+    private int activePlayers;
 
     public Board(int playerNumber, int tokenNumber, int pointsToWin) {
         tokenList = new ArrayList<>();
         playerList = new ArrayList<>();
         maxPlayersNumber = playerNumber;
         this.playerNumber = 0;
+        this.activePlayers = 0;
         for (int counter = 1; counter <= tokenNumber; counter++) {
             Token token = new Token(counter);
             tokenList.add(token);
@@ -28,6 +31,7 @@ public class Board {
         this.pointsToWin = pointsToWin;
         turn = 0;
         timeOut = false;
+        winner = -1;
     }
 
     public boolean addPlayer(Player player) {
@@ -37,6 +41,7 @@ public class Board {
         player.setId(playerNumber);
         playerList.add(playerNumber, player);
         playerNumber++;
+        activePlayers++;
         return true;
 
     }
@@ -51,16 +56,27 @@ public class Board {
         }
         System.out.println("Randul lui " + player.getName());
 
-        while (getTokenList().size() == 0 || timeOut) {
+        if (getTokenList().size() == 0 || timeOut || winner != -1) {
             if(getTokenList().size() == 0)
             {
                 System.out.println("No more tokens. Game Over!");
+                System.out.println(player.getName() + " a strans " + player.getMaxSize() + " puncte.");
+            }
+            else if(timeOut)
+            {
+                System.out.println("Out of time. Game Over!");
+                System.out.println(player.getName() + " a strans " + player.getMaxSize() + " puncte.");
             }
             else
-                System.out.println("Out of time. Game Over!");
+            {
+                System.out.println("Jucatorul " + player.getName() + " a pierdut :(!");
+            }
 
-            this.notifyAll();
+            activePlayers--;
+            //System.out.println(activePlayers);
+
             setNextTurn();
+            this.notifyAll();
             return false;
         }
 
@@ -70,6 +86,18 @@ public class Board {
         System.out.println(player.getName() + " a tras tokenul cu numarul " + token.getToken() + "!");
 
         setNextTurn();
+
+        if(player.getMaxProgression())
+        {
+            System.out.println("We have a winner! " + player.getName() + " a castigat!");
+            winner = player.getId();
+            return false;
+        }
+        else
+        {
+            System.out.println(player.getName() + " are o serie de " + player.getMaxSize() + " puncte.");
+        }
+
         this.notifyAll();
         return true;
 
@@ -129,5 +157,13 @@ public class Board {
 
     public void setTimeOut(boolean timeOut) {
         this.timeOut = timeOut;
+    }
+
+    public int getActivePlayers() {
+        return activePlayers;
+    }
+
+    public void setActivePlayers(int activePlayers) {
+        this.activePlayers = activePlayers;
     }
 }

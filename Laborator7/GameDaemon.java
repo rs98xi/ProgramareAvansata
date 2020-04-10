@@ -12,7 +12,7 @@ public class GameDaemon implements Runnable{
         maxTime = max;
     }
 
-    public void run()
+    public synchronized void  run()
     {
         boolean monitor = true;
         initialTime = System.currentTimeMillis();
@@ -23,6 +23,13 @@ public class GameDaemon implements Runnable{
             {
                 System.out.println("Time out");
                 board.setTimeOut(true);
+                monitor = false;
+            }
+            System.out.flush();
+            int players = board.getActivePlayers();
+            if(players == 0)
+            {
+                System.out.println("No more players. Game over!");
                 monitor = false;
             }
         }

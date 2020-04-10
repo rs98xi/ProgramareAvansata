@@ -1,6 +1,6 @@
 package com.company;
 
-public class Token {
+public class Token implements Comparable<Token>{
     private Integer token;
 
     public Token(Integer token) {
@@ -13,5 +13,10 @@ public class Token {
 
     public void setToken(Integer token) {
         this.token = token;
+    }
+
+    public int compareTo(Token token)
+    {
+        return this.getToken() - token.getToken();
     }
 }

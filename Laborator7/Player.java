@@ -3,18 +3,26 @@ package com.company;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Player implements Runnable {
-    private String Name;
-    private int id;
-    private Board board;
-    private List<Token> tokenList;
+public abstract class Player implements Runnable {
+    protected String Name;
+    protected int id;
+    protected Board board;
+    protected List<Token> tokenList;
+    protected int maxSize;
 
     public Player(String name, Board board) {
         Name = name;
         this.board = board;
         tokenList = new ArrayList<>();
         board.addPlayer(this);
+        maxSize = 0;
     }
+
+    public Player() {
+
+    }
+
+    public abstract boolean getMaxProgression();
 
     public void run() {
         if (board.getTokenList().size() == 0) {
@@ -62,5 +70,13 @@ public class Player implements Runnable {
 
     public void setTokenList(List<Token> tokenList) {
         this.tokenList = tokenList;
+    }
+
+    public int getMaxSize() {
+        return maxSize;
+    }
+
+    public void setMaxSize(int maxSize) {
+        this.maxSize = maxSize;
     }
 }
