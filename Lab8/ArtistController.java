@@ -5,16 +5,16 @@ import java.sql.ResultSet;
 public class ArtistController extends Controller{
 
     public void create(String name, String country) {
-        Database db = Database.getInstance();
+        Database database = Database.getInstance();
         int id = -1;
 
 
         String command = "SELECT MAX(id) FROM artists";
-        ResultSet res = db.get(command);
+        ResultSet resultSet = database.get(command);
 
         try {
-            while (res.next()) {
-                id = Integer.parseInt(res.getString(1));
+            while (resultSet.next()) {
+                id = Integer.parseInt(resultSet.getString(1));
             }
         } catch (Exception ignored) {
         }
@@ -22,21 +22,22 @@ public class ArtistController extends Controller{
 
         command = "INSERT INTO artists VALUES (" + Integer.toString(id + 1) + ", '" + name + "', '" + country + "')";
         System.out.println(command);
-        db.insert(command);
+        database.insert(command);
     }
 
     public void findByName(String name) {
-        Database db = Database.getInstance();
+        Database database = Database.getInstance();
         String command = "SELECT * from artists WHERE name = '" + name + "'";
         System.out.println(command);
-        ResultSet res = db.get(command);
+        ResultSet resultSet = database.get(command);
 
-        if (res != null) {
+        if (resultSet != null) {
             try {
-                while (res.next()) {
-                    System.out.println(res.getString(1) + " " + res.getString(2) + " " + res.getString(3));
+                while (resultSet.next()) {
+                    System.out.println(resultSet.getString(1) + " " + resultSet.getString(2) + " " + resultSet.getString(3));
                 }
-            } catch (Exception ignored) {
+            } catch (Exception e) {
+                e.printStackTrace();
             }
 
         }

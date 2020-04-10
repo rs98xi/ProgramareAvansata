@@ -7,13 +7,13 @@ import java.sql.*;
 
 public class Database {
     private static Database singleton = null;
-    public static Connection con;
+    public static Connection connection = null;
 
     public static Database getInstance() {
         if (singleton == null) {
             singleton = new Database();
             try {
-                con= DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","dba_temp","sql");
+                connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","dba_temp","sql");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -24,8 +24,8 @@ public class Database {
     public void insert(String command)
     {
         try {
-            Statement myStmt = con.createStatement();
-            myStmt.executeUpdate(command);
+            Statement connectionStatement = connection.createStatement();
+            connectionStatement.executeUpdate(command);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,8 +35,8 @@ public class Database {
     public ResultSet get(String command)
     {
         try {
-            Statement myStmt = con.createStatement();
-            return myStmt.executeQuery(command);
+            Statement connectionStatement = connection.createStatement();
+            return connectionStatement.executeQuery(command);
         } catch (SQLException e) {
             e.printStackTrace();
         }
